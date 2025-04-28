@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Employee Bonus Calculator</h1>
+    <div id="output"></div>
+    <p id="tot_bonus"></p>
+    <script>
+      let output = document.getElementById("output");
+      let tot_bonus = document.getElementById("tot_bonus");
+
+      const empData = [
+        { id: 1, name: "Alice", salary: 50000 },
+        { id: 2, name: "Bob", salary: 43000 },
+        { id: 3, name: "Charlie", salary: 60000 },
+      ];
+
+      // bonus Cal
+      function bonusCal() {
+        return this.salary * 0.1;
+      }
+
+      // eligible emp ----using filter
+      let eligibleEmps = empData.filter((ele) => ele.salary > 45000);
+
+      // add bonus to eligible emp ----using map
+      let empwithBonus = eligibleEmps.map((ele) => {
+        let bonusreceived = bonusCal.call(ele);
+        // spread operator
+        return {
+          ...ele,
+          bonus: bonusreceived,
+        };
+      });
+
+      // add total bonus of eligible emps
+      let totalBonus = empwithBonus.reduce((acc, ele) => {
+        return acc + ele.bonus;
+      }, 0);
+      console.log("total bouns ", totalBonus);
+
+      // display eligible emp in web page
+      empwithBonus.forEach(emp=>{
+        let p=document.createElement('p')
+        p.textContent=`${emp.name} earns ₹${emp.salary} and got bonus of ₹${emp.bonus}`
+        output.appendChild(p)
+      })
+      // display total bonus in web page
+      tot_bonus.textContent=`Total Bonus Given is: ₹${totalBonus}`
+    </script>
+  </body>
+</html>
